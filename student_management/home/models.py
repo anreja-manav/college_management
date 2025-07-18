@@ -12,4 +12,4 @@ class Students(models.Model):
     name = models.CharField(max_length=100)
     s_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     age = models.IntegerField()
-    roll_no = models.PositiveIntegerField(unique=True)
+    roll_no = models.PositiveIntegerField()
