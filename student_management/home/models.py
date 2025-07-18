@@ -13,3 +13,6 @@ class Students(models.Model):
     s_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     age = models.IntegerField()
     roll_no = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.name} - {self.s_class.name} (Roll No: {self.roll_no})"
