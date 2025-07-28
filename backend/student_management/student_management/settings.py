@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'students',
     'teachers',
     'admins',
+    'acedmics',
     'rest_framework',
     
 ]
