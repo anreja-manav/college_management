@@ -7,7 +7,7 @@ from rest_framework.response import Response
 # Create your views here.
 
 class StudentAPI(APIView):
-
+    
     def get(self, request):
         obj = Students.objects.all()
         serializer = StudentsSerializer(obj, many=True)
