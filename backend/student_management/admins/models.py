@@ -8,9 +8,10 @@ class Roles(models.Model):
         ('admin', 'Admin'),
     )
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, unique=True)
-
     def __str__(self):
         return self.role
+
+
 
 class AdminProfile(models.Model):
     name = models.CharField(max_length=100)
