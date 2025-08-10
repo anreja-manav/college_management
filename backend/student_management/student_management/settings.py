@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'teachers',
     'admins',
     'acedmics',
+    'accounts',
     'rest_framework',
     'rest_framework_simplejwt',
 ]
@@ -52,6 +53,8 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+AUTH_USER_MODEL = 'accounts.Account'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
