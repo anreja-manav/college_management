@@ -55,6 +55,21 @@ class TeacherProfile(models.Model):
     experience_years = models.PositiveIntegerField(default=0)
     bio = models.TextField(blank=True, null=True)
 
+    course_assigned = models.ForeignKey(
+        Courses, 
+        on_delete=models.CASCADE, 
+        null= True, 
+        blank = True, 
+        related_name='assigned_teachers'
+    )
+    semester_assigned = models.ForeignKey(
+        Semesters,
+        on_delete=models.CASCADE,
+        null= True,
+        blank = True,
+        related_name='assigned_teachers'
+    )
+
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name} ({self.user.email})"
 

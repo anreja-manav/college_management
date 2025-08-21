@@ -1,5 +1,7 @@
 from django.db import models
 
+from accounts.models import StudentProfile
+
 # Create your models here.
 class Courses(models.Model):
     course_name = models.CharField(max_length=50)
@@ -23,3 +25,4 @@ class Semesters(models.Model):
 
     def __str__(self):
         return self.semester
+

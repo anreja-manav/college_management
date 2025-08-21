@@ -49,9 +49,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     #Create Admin
     @action(detail = False, methods = ['post'], url_path='create/admin')
     def create_admin(self, request):
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
         
         data = request.data
         serializer = AccountSerializer(data = data)
@@ -66,9 +65,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     
     def list_admin(self, request):
         
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
         
         admins = Account.objects.filter(role__role='admin')
         serializer = AccountSerializer(admins, many = True)
@@ -77,9 +75,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     #Update Admin
     @action(detail = False, methods = ['put'], url_path = 'update/admin')
     def update_admin(self, request):
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
         
         email = request.data.get('email')
         if not email:
@@ -97,11 +94,10 @@ class AdminViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # Partial Update Admin
-    @action(detail = False, methods = ['put'], url_path = 'partial_update/admin')
+    @action(detail = False, methods = ['patch'], url_path = 'partial_update/admin')
     def partial_update_admin(self, request):
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
         
         email = request.data.get('email')
         if not email:
@@ -123,9 +119,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['delete'], url_path='delete/admin')
     def delete_admin(self, request):
         
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
 
         email = request.data.get('email')
         if not email:
@@ -145,9 +140,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['post'], url_path='create/teacher')
     def create_teacher(self, request):
 
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
         
         try:
             teacher_role = Roles.objects.get(role='teacher')
@@ -172,9 +166,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     
     def list_teacher(self, request):
         
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
         
         teachers = Account.objects.filter(role__role='teacher')
         serializer = AccountSerializer(teachers, many = True)
@@ -183,9 +176,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     #Update Teacher
     @action(detail = False, methods = ['put'], url_path = 'update/teacher')
     def update_teacher(self, request):
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
         
         email = request.data.get('email')
         if not email:
@@ -205,9 +197,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     # Partial Update Teacher
     @action(detail = False, methods = ['put'], url_path = 'partial_update/teacher')
     def partial_update_teacher(self, request):
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
         
         email = request.data.get('email')
         if not email:
@@ -229,9 +220,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['delete'], url_path='delete/Teacher')
     def delete_teacher(self, request):
         
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
 
         email = request.data.get('email')
         if not email:
@@ -250,9 +240,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['post'], url_path='create/student')
     def create_student(self, request):
 
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
         
         try:
             student_role = Roles.objects.get(role='student')
@@ -277,9 +266,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     
     def list_student(self, request):
         
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
         
         students = Account.objects.filter(role__role='student')
         serializer = AccountSerializer(students, many = True)
@@ -288,9 +276,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     #Update Student
     @action(detail = False, methods = ['put'], url_path = 'update/student')
     def update_student(self, request):
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
         
         email = request.data.get('email')
         if not email:
@@ -311,10 +298,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     @action(detail = False, methods = ['put'], url_path = 'partial_update/student')
     
     def partial_update_student(self, request):
-        import pdb; pdb.set_trace()
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
         
         email = request.data.get('email')
         if not email:
@@ -336,9 +321,8 @@ class AdminViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['delete'], url_path='delete/student')
     def delete_student(self, request):
         
-        permission = is_admin(request.user)
-        if permission:
-            return permission
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
 
         email = request.data.get('email')
         if not email:
