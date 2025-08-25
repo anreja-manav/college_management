@@ -365,3 +365,11 @@ class AdminViewSet(viewsets.ModelViewSet):
 
         serializer = AttendanceSerializer(qs, many=True)
         return Response(serializer.data, status=200)
+    
+class DashboardViewSet(viewsets.ModelViewSet):
+    @action(detail=False, methods=['get'], url_path='profile')
+    def profile(self, request):
+        if not request.user.is_authenticated:
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
+        serializer = AccountSerializer(request.user)
+        return Response(serializer.data)

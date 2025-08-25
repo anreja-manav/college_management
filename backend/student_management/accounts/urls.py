@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import AdminViewSet
+from .views import AdminViewSet, DashboardViewSet
 
 login = AdminViewSet.as_view({'post': 'login'})
+profile = DashboardViewSet.as_view({'get': 'profile'})
 
 admin_create = AdminViewSet.as_view({'post': 'create_admin'})
 admin_list = AdminViewSet.as_view({'get': 'list_admin'})
@@ -24,8 +25,10 @@ student_delete = AdminViewSet.as_view({'delete': 'delete_student'})
 view_attendance = AdminViewSet.as_view({'get': 'view_attendance'})
 
 
+
 urlpatterns = [
     path('login/', login, name='login'),
+    path('profile/', profile, name='profile'),
 
     path('create/admin/', admin_create, name='admin-create'),
     path('list/admin/', admin_list, name='admin-list'),
