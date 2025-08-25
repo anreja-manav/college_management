@@ -19,9 +19,12 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from accounts.urls import view_attendance
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('attendance/view/', view_attendance, name='attendance-view'),
     path('accounts/', include('accounts.urls')),
     path('teacher/', include("teachers.urls")),
     path('acedmics/', include('acedmics.urls')),

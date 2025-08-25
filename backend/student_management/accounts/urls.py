@@ -21,6 +21,9 @@ student_update = AdminViewSet.as_view({'put': 'update_student'})
 partial_student_update = AdminViewSet.as_view({'patch': 'partial_update_student'})
 student_delete = AdminViewSet.as_view({'delete': 'delete_student'})
 
+view_attendance = AdminViewSet.as_view({'get': 'view_attendance'})
+
+
 urlpatterns = [
     path('login/', login, name='login'),
 
@@ -41,4 +44,6 @@ urlpatterns = [
     path('update/student/', student_update, name='student-update'),
     path('partial_update/student/', partial_student_update, name='student-partial-update'),
     path('delete/student/', student_delete, name='student-delete'),
+
+    
 ]

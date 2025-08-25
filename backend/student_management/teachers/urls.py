@@ -3,8 +3,10 @@ from .views import AttendanceViewSet
 
 get_students = AttendanceViewSet.as_view({'get': 'get_students'})
 mark_attendance = AttendanceViewSet.as_view({'post': 'mark_attendance'})
+show_attendance = AttendanceViewSet.as_view({'get': 'view_attendance'})
 
 urlpatterns = [
     path('attendance/mark/', mark_attendance, name='mark-attandance'),
     path('attendance/students/list/', get_students, name='student-list'),
+    path('attendance/show/', show_attendance, name='show-attendance'),
 ]

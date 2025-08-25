@@ -2,12 +2,15 @@ from django.shortcuts import render
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status, viewsets
+from django.utils.dateparse import parse_date
 from django.contrib.auth.hashers import check_password
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Account, Roles
 from .serializers import AccountSerializer, LoginSerializer
 from .utils import is_admin
+from teachers.models import Attendance
+from teachers.serializers import AttendanceSerializer
 
 # Create your views here.
 class AdminViewSet(viewsets.ModelViewSet):
@@ -335,3 +338,30 @@ class AdminViewSet(viewsets.ModelViewSet):
 
         instance.delete()
         return Response({'detail': 'Student deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+    
+    #view attendance
+    @action(detail=False, methods=['get'], url_path='attendance/view')
+    def view_attendance(self, request):
+        if not is_admin(request.user):
+            return Response({'detail': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
+
+        date = request.query_params.get("date")
+        course = request.query_params.get("course")
+        semester = request.query_params.get("semester")
+
+        qs = Attendance.objects.all()
+
+        if date:
+            try:
+                qs = qs.filter(date=parse_date(date))
+            except Exception:
+                return Response({"error": "Invalid date format, expected YYYY-MM-DD"}, status=400)
+
+        if course:
+            qs = qs.filter(course_id=course)
+
+        if semester:
+            qs = qs.filter(semester_id=semester)
+
+        serializer = AttendanceSerializer(qs, many=True)
+        return Response(serializer.data, status=200)
